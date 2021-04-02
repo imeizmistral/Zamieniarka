@@ -1,6 +1,8 @@
 package com.adam.zamieniarka;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,21 +39,24 @@ public class MainActivity extends AppCompatActivity {
 
             public void onClick(View v) {
 
-                if(edittext.getText().toString().trim().length() == 0) {
-                    Toast toast = Toast.makeText(context, "Wprowadź liczbę",Toast.LENGTH_SHORT);
+                String input = edittext.getText().toString();
+                if (!TextUtils.isEmpty(input)) {
+                    int i = Integer.parseInt(edittext.getText().toString());
+                    if (i <= 3999 && i > 0) {
+                        ZamianaRoku();
+                        return;
+                    }
+                    else{Toast toast = Toast.makeText(context, "Wprowadź inną liczbę", Toast.LENGTH_SHORT);
+                        toast.show();
+                        lblOutput3.setText("");}
+                }else {
+                    Toast toast = Toast.makeText(context, "Wprowadź liczbę", Toast.LENGTH_SHORT);
                     toast.show();
-                  lblOutput3.setText("");
-
-                }else if (Integer.parseInt(edittext.getText().toString())>3999 | Integer.parseInt(edittext.getText().toString())==0){
-                  Toast toast = Toast.makeText(context, " Wprowadź inną liczbę",Toast.LENGTH_SHORT);
-                   toast.show();
-                   lblOutput3.setText("");
-               }
-                else{ZamianaRoku(); }
+                    lblOutput3.setText("");
+                }
             }
         });
     }
-
     private void ZamianaRoku() {
         String editString = edittext.getText().toString();
         int number = Integer.parseInt(editString);
@@ -166,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     lista.add("");
             }}
+
         String wynik = "";
         for(int i=lista.size()-1;i>= 0;i--) {
             wynik = wynik+ lista.get(i);
